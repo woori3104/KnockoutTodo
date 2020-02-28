@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>MOMEMTUM</title>
+        <link rel="stylesheet" href="./css/index.css" />
+    </head>
+    <body>
+        <div class="weatherContainer">
+            <div class="weather">
+                <img class="weather_icon" />
+                <div class="temperature"></div>
+            </div>
+            <div class="city"></div>
+            <div class="clockContainer">
+                <div class="clock">00:00</div>
+            </div>
+        </div>
+        <div class="todosContainer">
+            <form class="todosForm" data-bind="submit: submitNewTask">
+                <label>
+                    <div id="todosTitle">What is your main focus for today?</div>
+                    <div class="todoInputForm">
+                        <span>Task</span>
+                        <input
+                            id="todosInput"
+                            type="text"
+                            placeholder="input your Task"
+                            contenteditable="false"
+                            data-bind="value: inputTask"
+                        />
+                        <span class="">DueDate</span>
+                        <input
+                            id="todosInput"
+                            type="date"
+                            contenteditable="false"
+                            data-bind="value : inputDueDate" type="date"
+                        />
+                        <button id="todosInputBtn" data-bind="submit: submitNewTask">Submit</button>
+                    </div>
+                </label>
+            </form>
+            <div class="todos">
+                <div class="todosMsg">
+                    <i class="fas fa-chevron-circle-down"></i>
+                    <span class="msg">SEIZE THE DAY</span>
+                </div>
+                <ul data-bind="visible:todoList().length > 0">
+                    <li>
+                        <div class = "todoWrap">
+                            <div>ID</div>
+                            <div>TASK</div>
+                            <div>DUEDATE</div>
+                            <div>STATUS</div>
+                            <div>REPORTING DATE</div>
+                            <div>REPORTING BY LASTDATE</div>
+                            <div>DELETE</div>
+                        </div>
+                    </li>
+                    <li data-bind="template: {foreach: todoList}"> 
+                        <div class = "InputTodoWrap todoWrap" data-bind="css: { completed: task.completed(), none : !task.completed() }, click: $root.showEditTask">
+                            <div data-bind="text:task.taskId">ID</div>
+                            <div data-bind="text:task.taskName">TASK</div>
+                            <div data-bind="text:task.taskDueDate">DUEDATE</div>
+                            <div data-bind="text:task.taskStatus">STATUS</div>
+                            <div data-bind="text:task.taskReportingDate">REPORTING DATE</div>
+                            <div data-bind="text:task.taskLastDate">REPORTING BY LASTDATE</div>
+                            <div><button class = "delBtn btn" data-bind="click: $root.removeTask">Delete</button></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="editTaskContainer" data-bind="visible:showVisible">
+            <div id="todosTitle">UPDATE ITEM</div>
+            <div class = "editTodoWrap todoWrap">
+                <div>ID</div>
+                <div>TASK</div>
+                <div>DUEDATE</div>
+                <div>STATUS</div>
+                <div>DELETE</div>
+                <div>UPDATE</div>
+            </div>
+            <div class = "editTodoWrap todoWrap" data-bind="with:editTask">
+                <div data-bind="text:task.taskName">ID</div>
+                <input type="text" 
+                contenteditable="false"
+                class="task" data-bind="value:task.taskName">
+                <input type="date" 
+                contenteditable="false" 
+                data-bind="value : task.taskDueDate" type="date"/>
+                <select class="taskStatus" data-bind="value:task.taskStatus">
+                    <option value="created">Created</option>
+                    <option value="inProgress">InProgress</option>
+                    <option value="completed">Completed</option>
+                </select>
+                <div><button class = "delBtn btn"  data-bind="click: $root.removeTask">Delete</button></div>
+                <div><button class = "upDateBtn btn" data-bind="click: $root.updateTask">Update</button></div>
+            </div>
+        </div>
+    </body>
+    <script type='text/javascript' src='./js/knockout-3.5.1.js'></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="./js/todos.js"></script>
+    <script src="./js/clock.js"></script>
+    <script src="./js/weather.js"></script>
+</html>
